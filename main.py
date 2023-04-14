@@ -17,6 +17,7 @@ if __name__ == "__main__":
     if not path.isfile(COUNTRIES_PATH):
         print(">> SETTING UP COUNTRIES:")
         set_up_countries(COUNTRIES_PATH)
+        pritn(">> COUNTRIES ARE READY")
     
     # Declaring Managers
     sc = Scraper(LOG_FILE, COUNTRIES_PATH, CORES_ALLOWED)

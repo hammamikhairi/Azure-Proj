@@ -7,10 +7,6 @@ class AzureClient:
     SERVER      : str = "YOUR_SERVER_NAME"
     PORT        : str = 1433
 
-    USERNAME = "khairi"
-    DATABASE = "sltal-server"
-    SERVER = "stal-server-2.database.windows.net"
-
     DRIVER      : str = '{ODBC Driver 17 for SQL Server}'
     TABLE_NAME  : str = "COUNTRIES_TABLE"
     SERVER_LINK : str
@@ -25,3 +21,11 @@ class AzureClient:
                 cursor.execute(query)
         print("Pushed Data to DB.")
 
+    def exec_get(self, query):
+        with connect(self.SERVER_LINK) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query)
+                row = cursor.fetchone()
+                while row:
+                    yield row
+                    row = cursor.fetchone()
