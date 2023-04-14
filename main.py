@@ -8,8 +8,8 @@ from os              import path, environ
 from AzureClient     import AzureClient
 
 COUNTRIES_PATH = "countries.json"
-COUNTRIES_PATH = "ct2.json"
 LOG_FILE       = "temp_log.log"
+CORES_ALLOWED  = 1
 
 if __name__ == "__main__":
 
@@ -19,7 +19,7 @@ if __name__ == "__main__":
         set_up_countries(COUNTRIES_PATH)
     
     # Declaring Managers
-    sc = Scraper(LOG_FILE, COUNTRIES_PATH, 1)
+    sc = Scraper(LOG_FILE, COUNTRIES_PATH, CORES_ALLOWED)
     pr = Parser(LOG_FILE)
 
     # load scraping data
@@ -35,5 +35,9 @@ if __name__ == "__main__":
     temp_values = pr.parse()
 
     print(">> Saving Data:")
-    client = AzureClient(environ.get("YOUR_SQL_SERVER_PASSWORD"))
+    client = AzureClient(environ.get("AZURE_DB_SECRET"))
     client.exec_push(temp_values)
+
+    print(">> Clean up")
+    tmp = open(LOG_FILE, "w")
+    tmp.close()

@@ -7,7 +7,8 @@ class Parser:
         self.IN_FILE = infile
     
     def add_to_hash(self, count, capital):
-        self.VALUES_STRING += f"('{count}', '{capital}'), "
+        self.VALUES_STRING += f"('" +count+"', '" + capital.replace("'", "") + "'), "
+
 
     def parse(self) :
         with open(self.IN_FILE, "r") as f:
